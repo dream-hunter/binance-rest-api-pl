@@ -89,11 +89,11 @@ use BinanceAPI qw(
 #Possible values: 1m,3m,5m,15m,30m,1h,2h,4h,6h,8h,12h,1d,3d,1w,1M
 #Limit: Default 500; max 1000 (not required value)
 #
-#    $endpoint   = "https://api.binance.com/api/v3/klines";
-#    $parameters = "symbol=BTCUSDT&interval=1h&limit=10";
-#    $method     = "GET";
-#    ($result, $ping) = rest_api($endpoint, $parameters, $api, $method, $loglevel-1);
-#    print Dumper $result;
+    $endpoint   = "https://api.binance.com/api/v3/klines";
+    $parameters = "symbol=BTCUSDT&interval=1h&limit=2";
+    $method     = "GET";
+    ($result, $ping) = rest_api($endpoint, $parameters, $api, $method, $loglevel-1);
+    print Dumper $result;
 #
 #GET /api/v3/ticker/24hr
 #

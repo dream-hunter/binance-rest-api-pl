@@ -99,15 +99,20 @@ sub rest_api {
     my $api        = $_[2];
     my $method     = $_[3];
     my $loglevel   = $_[4];
-    my ($response_code, $decoded, $ping) = url_request($endpoint, $parameters, $api, $method, $loglevel-1);
-    logmessage ("\nget_api Response code: $response_code",$loglevel);
-    if ($response_code == 200 || $response_code == 201) {
-        logmessage (" - ok\n",$loglevel);
-        return ($decoded, $ping);
-    } else {
-        logmessage (" - bad\n",$loglevel);
-        return (undef, $ping);
+    foreach my $n ( 1 .. 10 ) {
+        my ($response_code, $decoded, $ping) = url_request($endpoint, $parameters, $api, $method, $loglevel-1);
+        logmessage ("\nget_api Response code: $response_code",$loglevel);
+        if ($response_code == 200 || $response_code == 201) {
+            logmessage (" - ok\n",$loglevel);
+            return ($decoded, $ping);
+        } elsif ($response_code == 500) {
+            logmessage (" - bad\nAttempt to reconnect $n...",$loglevel);
+        }else {
+            logmessage (" - bad\n",$loglevel);
+            return (undef, $ping);
+        }
     }
+    return (undef, 0);
 }
 
 sub logmessage {
